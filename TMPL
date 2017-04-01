@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset=utf-8>
+    <title>sissybee</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        var postMsg = function(){ 
+            $.post(
+                "http://localhost:3000/postcomment", 
+                {
+                    "message" : $('input[name=message]').val(),
+                    "id" : window.location.href.split('=')[1] 
+                },
+                "json"
+            ).complete(function (result)  {
+                if (result.status == 200)
+                    window.location.reload();
+                if (result.status == 413)
+                    alert('nope');
+            });
+        };
+
+        $(document).ready(function() { 
+            $("input[name=message]").keyup( function (event) {
+                if (event.keyCode == 13) {
+                    $("input[name=send]").click();
+                    $("input[name=message]").val("");
+                }
+            });
+            // button behaviour
+            $("input[name=send]").click(function(){ 
+                postMsg(); 
+            });
+       
+        });
+    </script>
+</head>
+<body>
+#con!ent#
+</body>
+</html>
